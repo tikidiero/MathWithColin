@@ -57,6 +57,7 @@ function generateQuestion() {
     }
     return { input1, input2, operationType, answer };
 }
+//works
 
 $(document).ready(() => {
     let { input1, input2, operationType, answer } = generateQuestion();
@@ -87,6 +88,8 @@ $(document).ready(() => {
             console.log("WRONG!");
         }
         
+//Potential issue found here
+
         $(".individualStats").empty()
 
         const additionStat = $('<li>',  {  
@@ -109,11 +112,12 @@ $(document).ready(() => {
             text: "Division: " + userCorrectAnswer["/"] + "/" + userTotalAnswer["/"]
         })
 
-        additionStat.appendTo($("weividualStats"));
+        additionStat.appendTo($(".individualStats"));
         subtractionStat.appendTo($(".individualStats"));
         multiplicationStat.appendTo($(".individualStats"));
         divisionStat.appendTo($(".individualStats"));
 
+// Possible issue here
 
         ({ input1, input2, operationType, answer } = generateQuestion()); // Generate a new question after the answer is submitted
         latexEq = `\\(${input1} ${intToOperation[operationType]} ${input2}\\)`;
@@ -122,8 +126,6 @@ $(document).ready(() => {
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, "mathEq"]);
         console.log("corrects", userCorrectAnswer)
         console.log("total", userTotalAnswer)
-
-
 
         
     });
@@ -140,48 +142,43 @@ $(document).ready(() => {
  * @return (description of the return value) 
  */ 
 
-//need to fix
-
-point = {
-    Addition: 0
-    Subtraction: 0
-    Mult: 0
+let point = {
+    Addition: 0,
+    Subtraction: 0,
+    Mult: 0,
     Div: 0
-    }
-    
-    difficulty = [0, 1, 2] 
-    difficultyToPoint = [1, 2, 3] //How many points you get for a question
-    
-    if (point[operation] < 5){
-    giveQuestion(easy)
-    
-        if (right){
-        point[operation] += difficultyToPoint[difficulty]
-        }
-        else{
-        point[operation] -= difficultyToPoint[difficulty]
-        }
-    
-    } else if (point[operation] > 5 && point[operation] < 8){
-    giveQuestion(medium)
-    
-        if (right){
-        point[operation] += difficultyToPoint[difficulty]
-        }
-        else{
-        point[operation] -= difficultyToPoint[difficulty]
-        }
-    
-    } else if (point[operation] > 7){
-    giveQuestion(hard)
-    
-        if (right){
-        point[operation] += difficultyToPoint[difficulty]
-        }
-        else{
-        point[operation] -= difficultyToPoint[difficulty]
-        }
-    
+};
+
+let difficulty = [0, 1, 2];
+let difficultyToPoint = [1, 2, 3]; // How many points you get for a question
+
+if (point[operation] < 5) {
+    giveQuestion("easy");
+
+    if (right) {
+        point[operation] += difficultyToPoint[difficulty];
+    } else {
+        point[operation] -= difficultyToPoint[difficulty];
     }
 
+} else if (point[operation] > 5 && point[operation] < 8) {
+    giveQuestion("medium");
+
+    if (right) {
+        point[operation] += difficultyToPoint[difficulty];
+    } else {
+        point[operation] -= difficultyToPoint[difficulty];
+    }
+
+} else if (point[operation] > 7) {
+    giveQuestion("hard");
+
+    if (right) {
+        point[operation] += difficultyToPoint[difficulty];
+    } else {
+        point[operation] -= difficultyToPoint[difficulty];
+    }
+}
+
+//need to fix
     
