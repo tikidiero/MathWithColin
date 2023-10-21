@@ -1,0 +1,231 @@
+///////////////////////// TOP OF FILE COMMENT BLOCK ////////////////////////////
+//
+// Title:           Math Questions
+// Course:          221, Fall, 2023
+//
+// Author:          Colin Yamada
+// Email:           cyamada@wisc.edu
+// Lecturer's Name: Jim Williams
+//
+///////////////////////////////// CITATIONS ////////////////////////////////////
+//
+// None
+//
+///////////////////////////////// REFLECTION ///////////////////////////////////
+//
+// 1. Describe the problem you wrote the program to solve:
+// For this project, I wanted to create a program in which will create different
+// types of random questions for the user in which will inform them whether
+// the user needs to work on their addition or subtraction.
+// 2. What are the biggest challenges you encountered:
+// One of the biggest challenges I have encountered was making sure that the
+// program doesn't crash when the user inputs something that is not an integer.
+// 3. What did you learn from this assignment:
+// From this assignment, I learned that I can overcome the challenges mentioned
+// above by utilizing the .hasInt(); and using a while loop to make sure that
+// the user is indeed inputting an integer and not words.
+/////////////////////////////// 80 COLUMNS WIDE ////////////////////////////////
+
+import java.util.Scanner;
+import java.util.Random;
+
+/**
+ * First asks user whether to do addition and subtraction
+ * questions, then provides a random questions to do, then provides summary
+ * on whether the user needs to work on addition or subtraction
+ *
+ * @author Colin Yamada
+ */
+
+public class H6CustomApp {
+
+    /**
+     * This section generates Subtraction Questions for the user
+     * <p>Algorithm : Random's nextInt method
+     * <p>
+     * @param correct : number of correct questions
+     * @return correct : number of correct questions
+     */
+
+    public static int generateSubtractionQuestion(int correct){
+
+        int numQuestion;
+        int firstValue = 0;
+        int secondValue = 0;
+        int answer;
+        correct = 0;
+
+        Scanner scnr = new Scanner(System.in);
+        Random rand = new Random();
+
+        for (numQuestion = 0 ; numQuestion < 10 ; numQuestion++) {
+
+            System.out.println("What is:");
+
+            //Creates random value (range of 0 - 9 as didn't want question to be too hard)
+            firstValue = rand.nextInt(10);
+            secondValue = rand.nextInt(10);
+
+            System.out.println(firstValue + "-" + secondValue + "=");
+
+            //Check whether the users input is a number
+            while (!scnr.hasNextInt()){
+                System.out.println("Input Number");
+
+                scnr.nextLine();
+            }
+
+            answer = scnr.nextInt();
+
+            scnr.nextLine();
+
+            if (answer == (firstValue - secondValue)){
+
+                System.out.println("Correct!");
+
+                correct ++ ; //Add one point to number of correct answers
+
+            } else {
+
+                System.out.println("Wrong");
+
+            }
+
+        }
+
+        return (correct);
+
+    }
+
+    /**
+     * This section generates Addition Questions for the user
+     * <p>Algorithm : Random's nextInt method
+     * <p>
+     * @param correct : number of correct questions
+     * @return correct : number of correct questions
+     */
+
+    public static int generateAdditionQuestion(int correct){
+
+        int numQuestion;
+        int firstValue = 0;
+        int secondValue = 0;
+        int answer;
+        correct = 0;
+
+        Scanner scnr = new Scanner(System.in);
+        Random rand = new Random();
+
+        for (numQuestion = 0 ; numQuestion < 10 ; numQuestion++) {
+
+            System.out.println("What is:");
+
+            firstValue = rand.nextInt(10);
+            secondValue = rand.nextInt(10);
+
+            System.out.println(firstValue + "+" + secondValue + "=");
+
+            while (!scnr.hasNextInt()){
+                System.out.println("Input Number");
+
+                scnr.nextLine();
+            }
+
+            answer = scnr.nextInt();
+            scnr.nextLine();
+
+            if (answer == (firstValue + secondValue)){
+
+                System.out.println("Correct!");
+
+                correct ++ ;
+
+            } else {
+
+                System.out.println("Wrong");
+
+            }
+
+        }
+
+        return (correct);
+
+    }
+
+    /**
+     * This section prints out instructions and results of the users test.
+     * <p>
+     * @param args : None
+     *
+     */
+
+    public static void main(String[] args) {
+
+        int correct = 0;
+        int choice = 0;
+
+        Scanner scnr = new Scanner(System.in);
+
+        System.out.println("What test would like to do?");
+        System.out.println("Select 1 for Addition");
+        System.out.println("Select 2 for Subtraction");
+
+        //Check if user input is valid
+        while (!scnr.hasNextInt()){
+            System.out.println("What test would like to do?");
+            System.out.println("Select 1 for Addition");
+            System.out.println("Select 2 for Subtraction");
+            scnr.nextLine();
+        }
+
+        choice = scnr.nextInt();
+
+        //Choose type of question
+        while (!(choice == 1 || choice == 2)){
+
+            System.out.println("Please choose between 1 or 2");
+            System.out.println("What test would like to do?");
+            System.out.println("Select 1 for Addition");
+            System.out.println("Select 2 for Subtraction");
+
+            while (!scnr.hasNextInt()){
+                scnr.nextLine();
+            }
+
+            choice = scnr.nextInt();
+
+        }
+
+        if (choice == 1){
+
+            System.out.println("You chose Addition!");
+
+            correct = generateAdditionQuestion(correct); //generate question
+
+        } else if (choice == 2){
+
+            System.out.println("You chose Subtraction!");
+
+            correct = generateSubtractionQuestion(correct); //generate question
+
+        }
+
+        //To tell user if they need to work on topic of choice
+        System.out.println("You got " + correct + " answers correct!");
+
+        if (correct < 5){
+
+            System.out.println("Can aim higher!");
+
+        } else if (correct >= 5 && correct < 9){
+
+            System.out.println("Good Job!");
+
+        } else if (correct >= 10){
+
+            System.out.println("Perfect!!");
+
+        }
+        scnr.close();
+    }
+}
