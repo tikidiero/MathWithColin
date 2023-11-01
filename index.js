@@ -49,6 +49,13 @@ $(document).ready(() => {
         const userAnswer = parseInt($("#answerinput").val());
         userTotalAnswer[intToOperationForCalc[operationType]] += 1
         $("#answerinput").val("")
+        if (userAnswer === answer) {  
+        userCorrectAnswer[intToOperationForCalc[operationType]] += 1
+            console.log("Right!");
+        } else {
+            console.log("WRONG!");
+        }
+
         if (userTotalAnswer[intToOperationForCalc[operationType]] === 3) {
             const index = intToOperationForCalc.indexOf(intToOperationForCalc[operationType])
             intToOperationForCalc.splice(index, 1)
@@ -56,13 +63,8 @@ $(document).ready(() => {
         }
         if (intToOperation.length === 0) {
             console.log("congrats");
+            $(".individualStats").empty()
             return
-        }
-        if (userAnswer === answer) {
-            userCorrectAnswer[intToOperationForCalc[operationType]] += 1
-            console.log("Right!");
-        } else {
-            console.log("WRONG!");
         }
         
         $(".individualStats").empty()
